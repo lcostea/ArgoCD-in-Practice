@@ -12,22 +12,23 @@ import (
 
 func main() {
 	timerSec := 30 * time.Second
+	gitopsRepo := "https://github.com/lcostea/ArgoCD-in-Practice.git"
+	localPath := "tmp/"
+	pathToApply := "ch1/basic-gitops-operator-config"
 	for {
-		gitopsRepo := "https://github.com/lcostea/basic-gitops-config.git"
-		localPath := "tmp/"
-		fmt.Println("start sync repo")
+		fmt.Println("start repo sync")
 		err := syncRepo(gitopsRepo, localPath)
 		if err != nil {
-			fmt.Printf("sync repo error: %s", err)
+			fmt.Printf("repo sync error: %s", err)
 			return
 		}
 		fmt.Println("start manifests apply")
-		err = applyManifestsClient(localPath)
+		err = applyManifestsClient(path.Join(localPath, pathToApply))
 		if err != nil {
-			fmt.Printf("apply manifests error: %s", err)
+			fmt.Printf("manifests apply error: %s", err)
 		}
 		syncTimer := time.NewTimer(timerSec)
-		fmt.Printf("\nnext sync in %s\n", timerSec)
+		fmt.Printf("\n next sync in %s \n", timerSec)
 		<-syncTimer.C
 	}
 }
