@@ -3,6 +3,9 @@ kind: ConfigMap
 metadata:
   name: argocd-notifications-cm
 data:
+  trigger.on-sync: |
+    - when: app.status.operationState.phase in ['Succeeded', 'Error', 'Failed']
+      send: [gitlab-webhook]
   service.webhook.gitlab: |
     url: https://gitlab.com
 
