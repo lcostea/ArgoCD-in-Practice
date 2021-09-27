@@ -2,8 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application 
 metadata:
   annotations:
-    notifications.argoproj.io/subscribe.on-sync-succeeded.gitlab: ""
-    notifications.argoproj.io/subscribe.on-sync-failed.gitlab: ""
+    notifications.argoproj.io/subscribe.on-sync.gitlab: ""
   name: argocd 
 spec: 
   destination: 
